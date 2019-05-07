@@ -1,0 +1,348 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 4: Convoluci&oacute;n y Correlaci&oacute;n de se&ntilde;ales en tiempo continuo</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-12"><meta name="DC.source" content="Practica4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 4: Convoluci&oacute;n y Correlaci&oacute;n de se&ntilde;ales en tiempo continuo</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Datos generales:</a></li><li><a href="#3">Objetivos:</a></li><li><a href="#5">Introduccion</a></li><li><a href="#6">Desarrollo</a></li><li><a href="#7">Problema 1 PR04</a></li><li><a href="#8">Problema 2 PR04</a></li><li><a href="#9">Problema e)</a></li><li><a href="#11">Ejercicio 4 PR06</a></li></ul></div><h2>Datos generales:<a name="1"></a></h2><p>Autores:</p><div><ul><li>Dominguez Rivera José Iván</li></ul></div><div><ul><li> Flores Alemán Héctor</li></ul></div>
+<div><ul><li>Ortiz Velazco Jaime Jonathan</li></ul></div>
+<div><ul>
+  <li>Sanjuan Vallejo Santiago Antonio</li></ul></div>
+  <p>Grupo: 2TV1</p><p>Profesor: Dr. Rafael Martinez Martinez</p><h2>Objetivos:<a name="3"></a></h2><div><ul><li>Conocer m&eacute;todos b&aacute;sicos de integraci&oacute;n num&eacute;rica</li><li>Manipulaci&oacute;n de instrucciones en MATLAB</li><li>Simular convoluciones y correlaciones de se&ntilde;ales continuas</li></ul></div><h2>Introduccion<a name="5"></a></h2><pre class="codeinput"><span class="comment">%En esta practica mostraremos como se comportan la convolucion y la</span>
+<span class="comment">%correlacion de dos se&ntilde;ales, y la representacion grafica que esta conlleva.</span>
+</pre><h2>Desarrollo<a name="6"></a></h2><h2>Problema 1 PR04<a name="7"></a></h2><p>Realiza la convoluci&oacute;n de las siguientes se&ntilde;ales</p><pre class="codeinput">figure(12)
+t=0:0.1:5;
+x1=@(t) ((-1*t)+1).*(t&gt;=0 &amp; t&lt;=1)+(t-1).*(t&gt;1&amp;t&lt;=2);
+x2=@(t) 1.*(t&gt;=0&amp;t&lt;=1);
+fplot(x1,[0,3],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x1(t)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'f(t)'</span>)
+axis([-2 2 -3 3])
+figure(13)
+fplot(x2,[0,3],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x2(t)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'f(t)'</span>)
+axis([-2 2 -2 2])
+convconm1(x1,x2)
+</pre><img vspace="5" hspace="5" src="Practica4_01.png" alt=""> <img vspace="5" hspace="5" src="Practica4_02.png" alt=""> <img vspace="5" hspace="5" src="Practica4_03.png" alt=""> <h2>Problema 2 PR04<a name="8"></a></h2><pre>Realiza la convolucion de las siguientes se&ntilde;ales</pre><pre class="codeinput">figure(14)
+t=0:0.1:3;
+<span class="comment">%x1=(t1&lt;1).*(t1)+(t1&gt;=1).*(1);</span>
+<span class="comment">%x2=(t&lt;=1).*0+(t&gt;=1).*1+(t&gt;3).*0;</span>
+x1=@(t) (t).*(t&gt;=0&amp;t&lt;=1) + 1.*(t&gt;1&amp;t&lt;2);
+x2=@(t) 1.*(t&gt;=1&amp;t&lt;=3);
+fplot(x1,[0,3],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x1(t)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'f(t)'</span>)
+axis([0 3 -3 3])
+figure(15)
+fplot(x2,[0,3],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x2(t)'</span>)
+xlabel(<span class="string">'t'</span>)
+ylabel(<span class="string">'f(t)'</span>)
+axis([0 3 0 3])
+convconm2(x1,x2)
+</pre><img vspace="5" hspace="5" src="Practica4_04.png" alt=""> <img vspace="5" hspace="5" src="Practica4_05.png" alt=""> <img vspace="5" hspace="5" src="Practica4_06.png" alt=""> <h2>Problema e)<a name="9"></a></h2><p>Realice la autocorrelacion de : <img src="Practica4_eq11219766473892374586.png" alt="$x1(t) = u(t) - 2u(t - 3) + u(t - 4)$"></p><p><img vspace="5" hspace="5" src="gif.jpg" alt=""> </p><pre class="codeinput">figure(10)
+x1=@(t) heaviside(t)-(2.*heaviside(t-3))+heaviside(t-4);  <span class="comment">%%definimos a x1</span>
+x11=@(t) heaviside(-t)-(2.*heaviside(-t-3))+heaviside(-t-4);<span class="comment">%%la invertimos</span>
+subplot(1,4,1)
+syms <span class="string">t</span>
+fplot(x1,[-10,10],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x1(t)'</span>)
+axis([-10 10,-5 5]);
+figure(11)
+t=[-10:0.01:10];
+plot(t, x11(t))
+grid <span class="string">on</span>
+title(<span class="string">'x11(t)'</span>)
+axis([-10 10,-5 5]);
+convconmchak(x11,x1)
+<span class="comment">% Resultado analitico</span>
+figure
+t1=-4:0.01:-3;
+t2=-3:0.01:-1;
+t3=-1:0.01:0;
+t4=0:0.01:1;
+t5=1:0.01:3;
+t6=3:0.01:4;
+subplot(1,3,3)
+plot(t1, -4-t1)
+hold <span class="string">on</span>
+plot(t2,t2+2)
+plot(t3,3*t3+4)
+plot(t4,-3*t4+4)
+plot(t5,-t5+2)
+plot(t6,-4+t6)
+grid <span class="string">on</span>
+title(<span class="string">'x(t)*h(t)'</span>)
+axis([-7 7 -5 5]);
+</pre><img vspace="5" hspace="5" src="Practica4_07.png" alt=""> <img vspace="5" hspace="5" src="Practica4_08.png" alt=""> <img vspace="5" hspace="5" src="Practica4_09.png" alt=""> <img vspace="5" hspace="5" src="Practica4_10.png" alt=""> <h2>Ejercicio 4 PR06<a name="11"></a></h2><pre class="codeinput"><span class="comment">%Tomando las se&ntilde;ales x0=u(t)-2u(t-2)+u(t-4) y x1=u(t)-2u(t-3)+u(t-4) y realizando la correlacion de ambas funciones con el siguiente codigo podemos obtener las graficas</span>
+
+figure(1)
+subplot(1,4,1)
+syms <span class="string">t</span>
+x0=@(t) heaviside(t)-(2.*heaviside(t-2))+heaviside(t-4);
+fplot(x0,[-10,10],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x0(t)'</span>)
+axis([-10 10,-5 5]);
+subplot(1,4,2)
+x1=@(t) heaviside(t)-(2.*heaviside(t-3))+heaviside(t-4);
+fplot(x1,[-10,10],<span class="string">'r'</span>)
+grid <span class="string">on</span>
+title(<span class="string">'x1(t)'</span>)
+axis([-10 10,-5 5]);
+t1=2:0.01:4;
+t2=1:0.01:2;
+t3=0:0.01:1;
+t4=-1:0.01:0;
+t5=-2:0.01:-1;
+t6=-3:0.01:-2;
+t7=-4:0.01:-3;
+subplot(1,3,3)
+plot(t1,-4+t1)
+hold <span class="string">on</span>
+plot(t2,-t2)
+plot(t3,-3.*t3+2)
+plot(t4,-t4+2)
+plot(t5,3.*t5+6)
+plot(t6,t6+2)
+plot(t7,-4-t7)
+grid <span class="string">on</span>
+title(<span class="string">'x(t)*h(t)'</span>)
+axis([-5 10 -5 5]);
+<span class="comment">%haciendo a x1(-t) en x2</span>
+x2=@(t) heaviside(-t)-(2.*heaviside(-t+3))+heaviside(-t+4);
+<span class="comment">%Haciendo la correlacion de las funciones, podemos observar que la primera</span>
+<span class="comment">%grafica representa como se estan haciendo convolucion la una a la orta y</span>
+<span class="comment">%por debajo de esta se puede observara el resultado de la correlacion de</span>
+<span class="comment">%las funciones.</span>
+CORRELACION(x0,x2);
+</pre><img vspace="5" hspace="5" src="Practica4_11.png" alt=""> <img vspace="5" hspace="5" src="Practica4_12.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 4: Convolución y Correlación de señales en tiempo continuo
+%% Datos generales:
+% Autores:
+%
+% * Dominguez Rivera Jose Ivan
+%
+% * Flores Aleman Hector
+%
+% * Jorge Ortiz Velazco Jaime Jonathan
+%
+% * Sanjuan Vallejo Santiago Antonio
+%
+% Grupo: 2TV1
+%
+% Profesor: Dr. Rafael Martinez Martinez
+%%
+%% Objetivos:
+% * Conocer métodos básicos de integración numérica
+% * Manipulación de instrucciones en MATLAB
+% * Simular convoluciones y correlaciones de señales continuas
+%%
+%% Introduccion
+%En esta practica mostraremos como se comportan la convolucion y la
+%correlacion de dos señales, y la representacion grafica que esta conlleva.
+%% Desarrollo
+%% Problema 1 PR04
+% Realiza la convolución de las siguientes señales
+figure(12)
+t=0:0.1:5;
+x1=@(t) ((-1*t)+1).*(t>=0 & t<=1)+(t-1).*(t>1&t<=2);
+x2=@(t) 1.*(t>=0&t<=1);
+fplot(x1,[0,3],'r')
+grid on
+title('x1(t)')
+xlabel('t')
+ylabel('f(t)')
+axis([-2 2 -3 3])
+figure(13)
+fplot(x2,[0,3],'r')
+grid on
+title('x2(t)')
+xlabel('t')
+ylabel('f(t)')
+axis([-2 2 -2 2])
+convconm1(x1,x2)
+%% Problema 2 PR04
+%  Realiza la convolucion de las siguientes señales
+figure(14)
+t=0:0.1:3;
+%x1=(t1<1).*(t1)+(t1>=1).*(1);
+%x2=(t<=1).*0+(t>=1).*1+(t>3).*0;
+x1=@(t) (t).*(t>=0&t<=1) + 1.*(t>1&t<2);
+x2=@(t) 1.*(t>=1&t<=3);
+fplot(x1,[0,3],'r')
+grid on
+title('x1(t)')
+xlabel('t')
+ylabel('f(t)')
+axis([0 3 -3 3])
+figure(15)
+fplot(x2,[0,3],'r')
+grid on
+title('x2(t)')
+xlabel('t')
+ylabel('f(t)')
+axis([0 3 0 3])
+convconm2(x1,x2)
+
+%% Problema e) 
+% Realice la autocorrelacion de : $x1(t) = u(t) - 2u(t - 3) + u(t - 4)$
+%%
+% 
+% <<gif.jpg>>
+% 
+
+figure(10)
+x1=@(t) heaviside(t)-(2.*heaviside(t-3))+heaviside(t-4);  %%definimos a x1
+x11=@(t) heaviside(-t)-(2.*heaviside(-t-3))+heaviside(-t-4);%%la invertimos
+subplot(1,4,1)
+syms t
+fplot(x1,[-10,10],'r')
+grid on
+title('x1(t)')
+axis([-10 10,-5 5]);
+figure(11)
+t=[-10:0.01:10];
+plot(t, x11(t))
+grid on
+title('x11(t)')
+axis([-10 10,-5 5]);
+convconmchak(x11,x1)
+% Resultado analitico
+figure
+t1=-4:0.01:-3;
+t2=-3:0.01:-1;
+t3=-1:0.01:0;
+t4=0:0.01:1;
+t5=1:0.01:3;
+t6=3:0.01:4;
+subplot(1,3,3)
+plot(t1, -4-t1)
+hold on
+plot(t2,t2+2)
+plot(t3,3*t3+4)
+plot(t4,-3*t4+4)
+plot(t5,-t5+2)
+plot(t6,-4+t6)
+grid on
+title('x(t)*h(t)')
+axis([-7 7 -5 5]);
+%% Ejercicio 4 PR06
+%Tomando las señales x0=u(t)-2u(t-2)+u(t-4) y x1=u(t)-2u(t-3)+u(t-4) y realizando la correlacion de ambas funciones con el siguiente codigo podemos obtener las graficas
+
+figure(1) 
+subplot(1,4,1)
+syms t
+x0=@(t) heaviside(t)-(2.*heaviside(t-2))+heaviside(t-4);
+fplot(x0,[-10,10],'r')
+grid on
+title('x0(t)')
+axis([-10 10,-5 5]);
+subplot(1,4,2)
+x1=@(t) heaviside(t)-(2.*heaviside(t-3))+heaviside(t-4);
+fplot(x1,[-10,10],'r')
+grid on
+title('x1(t)')
+axis([-10 10,-5 5]);
+t1=2:0.01:4;
+t2=1:0.01:2;
+t3=0:0.01:1;
+t4=-1:0.01:0;
+t5=-2:0.01:-1;
+t6=-3:0.01:-2;
+t7=-4:0.01:-3;
+subplot(1,3,3)
+plot(t1,-4+t1)
+hold on
+plot(t2,-t2)
+plot(t3,-3.*t3+2)
+plot(t4,-t4+2)
+plot(t5,3.*t5+6)
+plot(t6,t6+2)
+plot(t7,-4-t7)
+grid on
+title('x(t)*h(t)')
+axis([-5 10 -5 5]);
+%haciendo a x1(-t) en x2
+x2=@(t) heaviside(-t)-(2.*heaviside(-t+3))+heaviside(-t+4);
+%Haciendo la correlacion de las funciones, podemos observar que la primera
+%grafica representa como se estan haciendo convolucion la una a la orta y
+%por debajo de esta se puede observara el resultado de la correlacion de
+%las funciones.
+CORRELACION(x0,x2);
+
+
+##### SOURCE END #####
+--></body></html>
